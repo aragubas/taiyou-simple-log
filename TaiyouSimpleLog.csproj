@@ -11,7 +11,6 @@
     <Description>Simple and Elegant logging library for Godot projects</Description>
     <RequireLicenseAcceptance>True</RequireLicenseAcceptance>
     <PackageLicenseExpression>BSD-3-Clause-Attribution</PackageLicenseExpression>
-    <PackageLicenseUrl>https://spdx.org/licenses/BSD-3-Clause-Attribution.html</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/aragubas/taiyou-simple-log</PackageProjectUrl>
     <PackageId>aragubas.taiyousimplelog.9.23.25.7.48</PackageId>
     <Version>1.0.0</Version>
