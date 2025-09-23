@@ -1,6 +1,7 @@
 /*
-  License with "BSD with Attribution" (https://fedoraproject.org/wiki/Licensing/BSD_with_Attribution)
-  by Aragubas/Harley Sky Saphri at harleyskysaphri@gmail.com or https://aragubas.com
+  License with "MIT" (https://spdx.org/licenses/MIT.html)
+  Copyright 2025 Aragubas. Check out https://aragubas.com 
+  by Aragubas/Harley Sky Saphri at harleyskysaphri@gmail.com. Check out https://aragubas.com
 */
 
 #if !TAIYOULOG_NO_REFLECTION
