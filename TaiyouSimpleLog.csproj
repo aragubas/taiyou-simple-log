@@ -1,0 +1,26 @@
+﻿<Project Sdk="Godot.NET.Sdk/4.5.0">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Taiyou Simple Log</Title>
+    <Description>Simple and Elegant logging library for Godot projects</Description>
+    <RequireLicenseAcceptance>True</RequireLicenseAcceptance>
+    <PackageLicenseExpression>BSD-3-Clause-Attribution</PackageLicenseExpression>
+    <PackageLicenseUrl>https://spdx.org/licenses/BSD-3-Clause-Attribution.html</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/aragubas/taiyou-simple-log</PackageProjectUrl>
+    <PackageId>aragubas.taiyousimplelog.9.23.25.7.48</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Aragubas</Authors>
+    <Company>Aragubas</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE.txt" Pack="true" PackagePath=""/>
+  </ItemGroup>
+
+</Project>
