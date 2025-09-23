@@ -63,6 +63,6 @@ Kofi (https://ko-fi.com/aragubas)
 
 
 # License
-This project has been licensed with the BSD with Attribution license. 
+This project has been licensed with the MIT license. 
 
 More information at [LICENSE.txt](LICENSE.txt) 
