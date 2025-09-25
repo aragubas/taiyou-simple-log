@@ -16,7 +16,7 @@
     <PackageProjectUrl>https://github.com/aragubas/taiyou-simple-log</PackageProjectUrl>
     <PackageId>aragubas.taiyou.simplelog</PackageId>
     <PackageTags>taiyou,aragubas,logging,simple-logging,taiyou-simple-log,godot,godot-4-5, godot4, harleysky, harley</PackageTags>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <Authors>Aragubas</Authors>
     <Company>Aragubas</Company>
     <RepositoryUrl>https://github.com/aragubas/taiyou-simple-log.git</RepositoryUrl>
