@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://bi12fudg3kh4w"]
+
+[ext_resource type="Script" uid="uid://y52drig5c7lr" path="res://Assembly/UI/TestCard.cs" id="1_pkeij"]
+
+[node name="TestCard" type="MarginContainer"]
+script = ExtResource("1_pkeij")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="Padding" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Padding"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Label" type="Label" parent="Padding/VBox"]
+layout_mode = 2
+text = "Card Title"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Padding/VBox"]
+layout_mode = 2
+text = "Execute"

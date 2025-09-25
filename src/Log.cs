@@ -4,23 +4,48 @@
   by Aragubas/Harley Sky Saphri at harleyskysaphri@gmail.com. Check out https://aragubas.com
 */
 
-#if !TAIYOULOG_NO_REFLECTION
 using System.Diagnostics;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-#endif
 using Godot;
 
 namespace TaiyouSimpleLog;
 
+/// <summary>
+/// Main TaiyouSimpleLog class
+/// </summary>
 public static class Log {
-  static readonly string s_DefaultDebugColor = "dimgray";
-  static readonly string s_DefaultWarningColor = "orange";
-  static readonly string s_DefaultErrorColor = "red";
+  static readonly string s_DefaultDebugColor = "#696969";
+  static readonly string s_DefaultWarningColor = "#FFA500";
+  static readonly string s_DefaultErrorColor = "#FF0000";
 
+  /// <summary>
+  /// HTML color for debug messages
+  /// </summary>
   public static string DebugColor = s_DefaultDebugColor;
+  /// <summary>
+  /// HTML color for warning messages 
+  /// </summary>
   public static string WarningColor = s_DefaultWarningColor;
+  /// <summary>
+  /// HTML color for error messages 
+  /// </summary>
   public static string ErrorColor = s_DefaultErrorColor;
+  /// <summary>
+  /// If enabled, the actual message from the log output will not be colored 
+  /// </summary>
+  public static bool NoColorMessages;
+  /// <summary>
+  /// If enabled, Warning and Error messages will not be logged into Godot's internal debugger, but rather on the OS's terminal/Godot's Output Window 
+  /// </summary>
+  public static bool PrintRich;
+  /// <summary>
+  /// If enabled, Warning messages will not be logged into Godot's internal debugger, but rather on the OS's terminal/Godot's Output Window
+  /// </summary>
+  public static bool PrintRichWarning;
+  /// <summary>
+  /// If enabled, Error messages will not be logged into Godot's internal debugger, but rather on the OS's terminal/Godot's Output Window  
+  /// </summary>
+  public static bool PrintRichError;
 
   /// <summary>
   /// Resets DebugColor to it's default, hardcoded value
@@ -47,144 +72,83 @@ public static class Log {
   /// Logs message into OS terminal 
   /// </summary>
   /// <param name="message">Message to log</param>
-  /// <param name="includeNamespace">If true, includes the whole namespace instead of just the name of the function</param>
-  /// <param name="methodName">(Only used if TAIYOULOG_NO_REFLECTION <b>is</b> defined) The name of the calling method</param> 
-  /// <param name="className">(Only used if TAIYOULOG_NO_REFLECTION <b>is</b> defined) The name of the calling class</param>
-#if !TAIYOULOG_NO_REFLECTION
+  /// <param name="methodName">The name of the calling method. Automatically filled, auto-filled by the compiler</param> 
+  /// <param name="className">The name of the calling class, auto-filled by the compiler</param>
   [StackTraceHidden]
-#endif
-  public static void Debug(string message, bool includeNamespace = false, string methodName = "", string className = "") {
-#if !TAIYOULOG_NO_REFLECTION
-    // Colors colors!
-#if TAIYOULOG_NO_COLOR_MESSAGE
-    string printMessage = $"[color={DebugColor}]{MethodHeader(new StackFrame(1).GetMethod(), includeNamespace)};[/color] {message}";
-#else
-    string printMessage = $"[color={DebugColor}]{MethodHeader(new StackFrame(1).GetMethod(), includeNamespace)}; {message} [/color]";
-#endif
+  public static void Debug(
+    string message,
+    [CallerFilePath] string className = "",
+    [CallerMemberName] string methodName = "") {
+
+    className = Path.GetFileName(className);
+
+    string printMessage;
+    if (NoColorMessages)
+      printMessage = $"[color={DebugColor}]{MethodHeader(className, methodName)};[/color] {message}";
+    else
+      printMessage = $"[color={DebugColor}]{MethodHeader(className, methodName)}; {message} [/color]";
 
     GD.PrintRich(printMessage);
-#else
-    // Colors colors!
-#if TAIYOULOG_NO_COLOR_MESSAGE
-    string printMessage = $"[color={DebugColor}]{MethodHeader(className, methodName)};[/color] {message}";
-#else
-    string printMessage = $"[color={DebugColor}]{MethodHeader(className, methodName)}; {message} [/color]";
-#endif
-
-    GD.PrintRich(printMessage);
-#endif
   }
 
   /// <summary>
-  /// Logs message into Godot's built in debugger (if TAIYOULOG_PRINTRICH or TAIYOULOG_WARNING_PRINTRICH is <b>not</b> defined) and into OS terminal
+  /// Logs message into Godot's built in debugger (if PrintRich or PrintRichWarning is <b>not</b> defined) and into OS terminal
   /// </summary>
   /// <param name="message"></param>
-  /// <param name="includeNamespace"></param>
-  /// <param name="methodName">(Only used if TAIYOULOG_NO_REFLECTION <b>is</b> defined) The name of the calling method</param> 
-  /// <param name="className">(Only used if TAIYOULOG_NO_REFLECTION <b>is</b> defined) The name of the calling class</param>
-#if !TAIYOULOG_NO_REFLECTION
+  /// <param name="methodName">The name of the calling method, auto-filled by the compiler</param> 
+  /// <param name="className">The name of the calling class, auto-filled by the compiler</param>
   [StackTraceHidden]
-#endif
-  public static void Warning(string message, bool includeNamespace = false, string methodName = "", string className = "") {
-#if !TAIYOULOG_NO_REFLECTION
-    //  If NO_REFLECTION is NOT set (default behavior)
-#if TAIYOULOG_WARNING_PRINTRICH || TAIYOULOG_PRINTRICH
+  public static void Warning(
+    string message,
+    [CallerFilePath] string className = "",
+    [CallerMemberName] string methodName = "") {
+    className = Path.GetFileName(className);
 
-    // Colors colors!
-#if TAIYOULOG_NO_COLOR_MESSAGE
-    string printMessage = $"[color={WarningColor}] WARN {MethodHeader(new StackFrame(1).GetMethod(), includeNamespace)};[/color] {message}";
-#else
-    string printMessage = $"[color={WarningColor}] WARN {MethodHeader(new StackFrame(1).GetMethod(), includeNamespace)}; {message} [/color]";
-#endif
+    if (PrintRich || PrintRichWarning) {
+      string printMessage;
+      if (NoColorMessages)
+        printMessage = $"[color={WarningColor}] WARN {MethodHeader(className, methodName)};[/color] {message}";
+      else
+        printMessage = $"[color={WarningColor}] WARN {MethodHeader(className, methodName)}; {message}[/color]";
 
-    GD.PrintRich(printMessage);
-#else
-    GD.PushWarning($"{MethodHeader(new StackFrame(1).GetMethod(), includeNamespace)}; {message}");
-#endif
-
-#else
-    //  If NO_REFLECTION is set
-#if TAIYOULOG_WARNING_PRINTRICH || TAIYOULOG_PRINTRICH
-
-    // Colors! Colors!
-#if TAIYOULOG_NO_COLOR_MESSAGE
-    string printMessage = $"[color={WarningColor}] WARN {MethodHeader(className, methodName)};[/color] {message}";
-#else
-    string printMessage = $"[color={WarningColor}] WARN {MethodHeader(className, methodName)}; {message}[/color]";
-#endif
-
-    GD.PrintRich(printMessage);
-#else
-    GD.PushWarning($"{MethodHeader(className, methodName)}; {message}");
-#endif
-#endif
-  }
-
-  /// <summary>
-  /// Logs message into standard error output (if TAIYOULOG_PRINTRICH or TAIYOULOG_ERROR_PRINTRICH is <b>not</b> defined) and into OS terminal
-  /// </summary>
-  /// <param name="message"></param>
-  /// <param name="includeNamespace"></param>
-  /// <param name="methodName">(Only used if TAIYOULOG_NO_REFLECTION <b>is</b> defined) The name of the calling method</param> 
-  /// <param name="className">(Only used if TAIYOULOG_NO_REFLECTION <b>is</b> defined) The name of the calling class</param>
-#if !TAIYOULOG_NO_REFLECTION
-  [StackTraceHidden]
-#endif
-  public static void Error(string message, bool includeNamespace = false, string methodName = "", string className = "") {
-#if !TAIYOULOG_NO_REFLECTION
-    //  If NO_REFLECTION is NOT set (default behavior)
-#if TAIYOULOG_ERROR_PRINTRICH || TAIYOULOG_PRINTRICH
-
-    // Colors colors!
-#if TAIYOULOG_NO_COLOR_MESSAGE
-    string printMessage = $"[color=${ErrorColor}]ERROR {MethodHeader(new StackFrame(1).GetMethod(), includeNamespace)};[/color] {message}";
-#else
-    string printMessage = $"[color={ErrorColor}]ERROR {MethodHeader(new StackFrame(1).GetMethod(), includeNamespace)}; {message} [/color]";
-#endif
-
-    GD.PrintRich(printMessage);
-
-#else
-    GD.PushError($"{MethodHeader(new StackFrame(1).GetMethod(), includeNamespace)}; {message}");
-#endif
-
-#else
-    //  If NO_REFLECTION is set
-#if TAIYOULOG_ERROR_PRINTRICH || TAIYOULOG_PRINTRICH
-
-    // Colors! Colors!
-#if TAIYOULOG_NO_COLOR_MESSAGE
-    string printMessage = $"[color={ErrorColor}]ERROR {MethodHeader(className, methodName)};[/color] {message}";
-#else
-    string printMessage = $"[color={ErrorColor}]ERROR {MethodHeader(className, methodName)}; {message}[/color]";
-#endif
-
-    GD.PrintRich(printMessage);
-#else
-    GD.PushError($"{MethodHeader(className, methodName)}; {message}");
-#endif
-#endif
-  }
-
-#if !TAIYOULOG_NO_REFLECTION
-  /// <summary>
-  /// Gets the name of the function called before this one and optionally the namespace
-  /// </summary>
-  /// <param name="methodBase">MethodBase reflection parameter</param>
-  /// <param name="includeNamespace">If true, includes the name of the calling namespace</param>
-  /// <returns></returns>
-  [MethodImpl(MethodImplOptions.AggressiveInlining)]
-  public static string MethodHeader(MethodBase? methodBase, bool includeNamespace = false) {
-    if (methodBase is MethodBase method) {
-      string className = "(error)";
-      // Check if declaring type isn't null
-      if (methodBase.DeclaringType is Type type)
-        className = includeNamespace ? type.ToString() : type.Name;
-      return $"{className}::{methodBase.Name}";
+      GD.PrintRich(printMessage);
+      return;
     }
-    return "(error, method base is null)";
+
+    // Not printing rich
+    GD.PushWarning($"{MethodHeader(className, methodName)}; {message}");
   }
-#else
+
+  /// <summary>
+  /// Logs message into standard error output (if PrintRich or PrintRichError is <b>not</b> defined) and into OS terminal
+  /// </summary>
+  /// <param name="message"></param>
+  /// <param name="methodName">The name of the calling method, auto-filled by the compiler</param> 
+  /// <param name="className">The name of the calling class, auto-filled by the compiler</param>
+  [StackTraceHidden]
+  public static void Error(
+    string message,
+    [CallerFilePath] string className = "",
+    [CallerMemberName] string methodName = "") {
+
+    className = Path.GetFileName(className);
+
+    if (PrintRich || PrintRichError) {
+      string printMessage;
+
+      if (NoColorMessages)
+        printMessage = $"[color={ErrorColor}]ERROR {MethodHeader(className, methodName)};[/color] {message}";
+      else
+        printMessage = $"[color={ErrorColor}]ERROR {MethodHeader(className, methodName)}; {message}[/color]";
+
+      GD.PrintRich(printMessage);
+      return;
+    }
+
+    // Not printing rich
+    GD.PushError($"{MethodHeader(className, methodName)}; {message}");
+  }
+
   /// <summary>
   /// Returns a neatly formatted string with the className and methodName as if Reflection was available
   /// </summary>
@@ -193,5 +157,4 @@ public static class Log {
   /// <returns>A neatly formatted string with className and methodName</returns>
   public static string MethodHeader(string className, string methodName)
     => $"{className}::{methodName}";
-#endif
 }
