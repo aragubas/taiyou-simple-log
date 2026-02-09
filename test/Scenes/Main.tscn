@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bcq5x0xadmo70"]
+[gd_scene format=3 uid="uid://bcq5x0xadmo70"]
 
-[ext_resource type="Script" uid="uid://81n1hotengq8" path="res://Assembly/Main.cs" id="1_r150o"]
+[ext_resource type="Script" uid="uid://birhbsp44xi13" path="res://Assembly/Main.cs" id="1_r150o"]
 [ext_resource type="PackedScene" uid="uid://bi12fudg3kh4w" path="res://UI/TestCard.tscn" id="2_idj7w"]
 
-[node name="Main" type="Control"]
+[node name="Main" type="Control" unique_id=1785180439]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_r150o")
 
-[node name="Center" type="CenterContainer" parent="."]
+[node name="Center" type="CenterContainer" parent="." unique_id=295203194]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,66 +21,66 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 
-[node name="VBox" type="VBoxContainer" parent="Center"]
+[node name="VBox" type="VBoxContainer" parent="Center" unique_id=1388336685]
 layout_mode = 2
 theme_override_constants/separation = 14
 alignment = 1
 
-[node name="TestCards" type="GridContainer" parent="Center/VBox"]
+[node name="TestCards" type="GridContainer" parent="Center/VBox" unique_id=739074041]
 layout_mode = 2
 theme_override_constants/h_separation = 16
 theme_override_constants/v_separation = 16
 columns = 3
 
-[node name="DebugPrint" parent="Center/VBox/TestCards" instance=ExtResource("2_idj7w")]
+[node name="DebugPrint" parent="Center/VBox/TestCards" unique_id=234654768 instance=ExtResource("2_idj7w")]
 layout_mode = 2
 _title = "Print Debug"
 
-[node name="WarningPrint" parent="Center/VBox/TestCards" instance=ExtResource("2_idj7w")]
+[node name="WarningPrint" parent="Center/VBox/TestCards" unique_id=1494185844 instance=ExtResource("2_idj7w")]
 layout_mode = 2
 _title = "Print Warning"
 
-[node name="ErrorPrint" parent="Center/VBox/TestCards" instance=ExtResource("2_idj7w")]
+[node name="ErrorPrint" parent="Center/VBox/TestCards" unique_id=288701618 instance=ExtResource("2_idj7w")]
 layout_mode = 2
 _title = "Print Error"
 
-[node name="TogglesCenter" type="CenterContainer" parent="Center/VBox"]
+[node name="TogglesCenter" type="CenterContainer" parent="Center/VBox" unique_id=1853465541]
 layout_mode = 2
 
-[node name="TogglesGrid" type="GridContainer" parent="Center/VBox/TogglesCenter"]
+[node name="TogglesGrid" type="GridContainer" parent="Center/VBox/TogglesCenter" unique_id=433822474]
 layout_mode = 2
 columns = 2
 
-[node name="NoColorMessages" type="CheckButton" parent="Center/VBox/TogglesCenter/TogglesGrid"]
+[node name="NoColorMessages" type="CheckButton" parent="Center/VBox/TogglesCenter/TogglesGrid" unique_id=1334448011]
 layout_mode = 2
 text = "NoColorMessages"
 
-[node name="PrintRich" type="CheckButton" parent="Center/VBox/TogglesCenter/TogglesGrid"]
+[node name="PrintRich" type="CheckButton" parent="Center/VBox/TogglesCenter/TogglesGrid" unique_id=28849543]
 layout_mode = 2
 text = "PrintRich"
 
-[node name="PrintRichWarning" type="CheckButton" parent="Center/VBox/TogglesCenter/TogglesGrid"]
+[node name="PrintRichWarning" type="CheckButton" parent="Center/VBox/TogglesCenter/TogglesGrid" unique_id=1278708072]
 layout_mode = 2
 text = "PrintRichWarning"
 
-[node name="PrintRichError" type="CheckButton" parent="Center/VBox/TogglesCenter/TogglesGrid"]
+[node name="PrintRichError" type="CheckButton" parent="Center/VBox/TogglesCenter/TogglesGrid" unique_id=2010961473]
 layout_mode = 2
 text = "PrintRichError"
 
-[node name="ColorsCenter" type="CenterContainer" parent="Center/VBox"]
+[node name="ColorsCenter" type="CenterContainer" parent="Center/VBox" unique_id=705544089]
 layout_mode = 2
 
-[node name="ColorsGrid" type="GridContainer" parent="Center/VBox/ColorsCenter"]
+[node name="ColorsGrid" type="GridContainer" parent="Center/VBox/ColorsCenter" unique_id=1046049641]
 layout_mode = 2
 theme_override_constants/h_separation = 6
 theme_override_constants/v_separation = 12
 columns = 3
 
-[node name="DebugColorLabel" type="Label" parent="Center/VBox/ColorsCenter/ColorsGrid"]
+[node name="DebugColorLabel" type="Label" parent="Center/VBox/ColorsCenter/ColorsGrid" unique_id=2011913096]
 layout_mode = 2
 text = "DebugColor"
 
-[node name="DebugColor" type="ColorPickerButton" parent="Center/VBox/ColorsCenter/ColorsGrid"]
+[node name="DebugColor" type="ColorPickerButton" parent="Center/VBox/ColorsCenter/ColorsGrid" unique_id=582407173]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 2
@@ -88,15 +88,15 @@ text = "ErrorColor"
 icon_alignment = 1
 edit_alpha = false
 
-[node name="ResetDebugColor" type="Button" parent="Center/VBox/ColorsCenter/ColorsGrid"]
+[node name="ResetDebugColor" type="Button" parent="Center/VBox/ColorsCenter/ColorsGrid" unique_id=460093282]
 layout_mode = 2
 text = "Reset"
 
-[node name="WarningColorLabel" type="Label" parent="Center/VBox/ColorsCenter/ColorsGrid"]
+[node name="WarningColorLabel" type="Label" parent="Center/VBox/ColorsCenter/ColorsGrid" unique_id=13321283]
 layout_mode = 2
 text = "WarningColor"
 
-[node name="WarningColor" type="ColorPickerButton" parent="Center/VBox/ColorsCenter/ColorsGrid"]
+[node name="WarningColor" type="ColorPickerButton" parent="Center/VBox/ColorsCenter/ColorsGrid" unique_id=2106599928]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 2
@@ -104,15 +104,15 @@ text = "ErrorColor"
 icon_alignment = 1
 edit_alpha = false
 
-[node name="ResetWarningColor" type="Button" parent="Center/VBox/ColorsCenter/ColorsGrid"]
+[node name="ResetWarningColor" type="Button" parent="Center/VBox/ColorsCenter/ColorsGrid" unique_id=917314848]
 layout_mode = 2
 text = "Reset"
 
-[node name="ErrorColorLabel" type="Label" parent="Center/VBox/ColorsCenter/ColorsGrid"]
+[node name="ErrorColorLabel" type="Label" parent="Center/VBox/ColorsCenter/ColorsGrid" unique_id=1847423996]
 layout_mode = 2
 text = "ErrorColor"
 
-[node name="ErrorColor" type="ColorPickerButton" parent="Center/VBox/ColorsCenter/ColorsGrid"]
+[node name="ErrorColor" type="ColorPickerButton" parent="Center/VBox/ColorsCenter/ColorsGrid" unique_id=976767941]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 2
@@ -120,6 +120,6 @@ text = "ErrorColor"
 icon_alignment = 1
 edit_alpha = false
 
-[node name="ResetErrorColor" type="Button" parent="Center/VBox/ColorsCenter/ColorsGrid"]
+[node name="ResetErrorColor" type="Button" parent="Center/VBox/ColorsCenter/ColorsGrid" unique_id=1550819351]
 layout_mode = 2
 text = "Reset"
