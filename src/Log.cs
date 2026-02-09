@@ -80,21 +80,40 @@ public static class Log {
     [CallerFilePath] string className = "",
     [CallerMemberName] string methodName = "") {
 
+    GD.PrintRich(GetDebugText(className, methodName, message));
+  }
+
+  /// <summary>
+  /// Logs message into OS terminal 
+  /// </summary>
+  /// <param name="obj">Object to log (calls ToString)</param>
+  /// <param name="methodName">The name of the calling method. Automatically filled, auto-filled by the compiler</param> 
+  /// <param name="className">The name of the calling class, auto-filled by the compiler</param>
+  [StackTraceHidden]
+  public static void Debug(
+    object obj,
+    [CallerFilePath] string className = "",
+    [CallerMemberName] string methodName = "") {
+    GD.PrintRich(GetDebugText(className, methodName, obj.ToString() ?? "null"));
+  }
+
+  /// <summary>
+  /// Returns nearly formatted text for debug logging
+  /// </summary>
+  static string GetDebugText(string className, string methodName, string message) {
     className = Path.GetFileName(className);
 
-    string printMessage;
     if (NoColorMessages)
-      printMessage = $"[color={DebugColor}]{MethodHeader(className, methodName)};[/color] {message}";
-    else
-      printMessage = $"[color={DebugColor}]{MethodHeader(className, methodName)}; {message} [/color]";
+      return $"{MethodHeader(className, methodName)}; {message}";
 
-    GD.PrintRich(printMessage);
+    return $"[color={DebugColor}]{MethodHeader(className, methodName)}; {message} [/color]";
   }
+
 
   /// <summary>
   /// Logs message into Godot's built in debugger (if PrintRich or PrintRichWarning is <b>not</b> defined) and into OS terminal
   /// </summary>
-  /// <param name="message"></param>
+  /// <param name="message">Message to log</param>
   /// <param name="methodName">The name of the calling method, auto-filled by the compiler</param> 
   /// <param name="className">The name of the calling class, auto-filled by the compiler</param>
   [StackTraceHidden]
@@ -105,24 +124,57 @@ public static class Log {
     className = Path.GetFileName(className);
 
     if (PrintRich || PrintRichWarning) {
-      string printMessage;
-      if (NoColorMessages)
-        printMessage = $"[color={WarningColor}] WARN {MethodHeader(className, methodName)};[/color] {message}";
-      else
-        printMessage = $"[color={WarningColor}] WARN {MethodHeader(className, methodName)}; {message}[/color]";
-
-      GD.PrintRich(printMessage);
+      GD.PrintRich(GetWarningText(className, methodName, message));
       return;
     }
 
     // Not printing rich
+    PushWarning(className, methodName, message);
+  }
+
+  /// <summary>
+  /// Logs message into Godot's built in debugger (if PrintRich or PrintRichWarning is <b>not</b> defined) and into OS terminal
+  /// </summary>
+  /// <param name="obj">Object to log (calls ToString())</param>
+  /// <param name="methodName">The name of the calling method, auto-filled by the compiler</param> 
+  /// <param name="className">The name of the calling class, auto-filled by the compiler</param>
+  [StackTraceHidden]
+  public static void Warning(
+    object obj,
+    [CallerFilePath] string className = "",
+    [CallerMemberName] string methodName = "") {
+    className = Path.GetFileName(className);
+    string message = obj.ToString() ?? "null";
+
+    if (PrintRich || PrintRichWarning) {
+      GD.PrintRich(GetWarningText(className, methodName, message));
+      return;
+    }
+
+    // Not printing rich
+    PushWarning(className, methodName, message);
+  }
+
+  /// <summary>
+  /// Returns nearly formatted string for warning logging
+  /// </summary>
+  static string GetWarningText(string className, string methodName, string message) {
+    if (NoColorMessages)
+      return $" WARN {MethodHeader(className, methodName)}; {message}";
+    return $"[color={WarningColor}] WARN {MethodHeader(className, methodName)}; {message}[/color]";
+  }
+
+  /// <summary>
+  /// Pushes a neatly formatted string into Godot's warning output 
+  /// </summary>
+  static void PushWarning(string className, string methodName, string message) {
     GD.PushWarning($"{MethodHeader(className, methodName)}; {message}");
   }
 
   /// <summary>
   /// Logs message into standard error output (if PrintRich or PrintRichError is <b>not</b> defined) and into OS terminal
   /// </summary>
-  /// <param name="message"></param>
+  /// <param name="message">Message to log</param>
   /// <param name="methodName">The name of the calling method, auto-filled by the compiler</param> 
   /// <param name="className">The name of the calling class, auto-filled by the compiler</param>
   [StackTraceHidden]
@@ -134,18 +186,51 @@ public static class Log {
     className = Path.GetFileName(className);
 
     if (PrintRich || PrintRichError) {
-      string printMessage;
-
-      if (NoColorMessages)
-        printMessage = $"[color={ErrorColor}]ERROR {MethodHeader(className, methodName)};[/color] {message}";
-      else
-        printMessage = $"[color={ErrorColor}]ERROR {MethodHeader(className, methodName)}; {message}[/color]";
-
-      GD.PrintRich(printMessage);
+      GD.PrintRich(GetErrorText(className, methodName, message));
       return;
     }
 
     // Not printing rich
+    PushError(className, methodName, message);
+  }
+
+  /// <summary>
+  /// Logs message into standard error output (if PrintRich or PrintRichError is <b>not</b> defined) and into OS terminal
+  /// </summary>
+  /// <param name="obj">Object to log (calls ToString())</param>
+  /// <param name="methodName">The name of the calling method, auto-filled by the compiler</param> 
+  /// <param name="className">The name of the calling class, auto-filled by the compiler</param>
+  [StackTraceHidden]
+  public static void Error(
+    object obj,
+    [CallerFilePath] string className = "",
+    [CallerMemberName] string methodName = "") {
+
+    string message = obj.ToString() ?? "null";
+    className = Path.GetFileName(className);
+
+    if (PrintRich || PrintRichError) {
+      GD.PrintRich(GetErrorText(className, methodName, message));
+      return;
+    }
+
+    // Not printing rich
+    PushError(className, methodName, message);
+  }
+
+  /// <summary>
+  /// Returns a neatly formatted string for error logging 
+  /// </summary>
+  static string GetErrorText(string className, string methodName, string message) {
+    if (NoColorMessages)
+      return $"ERROR {MethodHeader(className, methodName)}; {message}";
+    return $"[color={ErrorColor}]ERROR {MethodHeader(className, methodName)}; {message}[/color]";
+  }
+
+  /// <summary>
+  /// Pushes an error into Godot's error output 
+  /// </summary>
+  static void PushError(string className, string methodName, string message) {
     GD.PushError($"{MethodHeader(className, methodName)}; {message}");
   }
 

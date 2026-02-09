@@ -9,6 +9,9 @@ public partial class Main : Control {
   TestCard m_DebugPrint;
   TestCard m_WarningPrint;
   TestCard m_ErrorPrint;
+  TestCard m_ObjDebugPrint;
+  TestCard m_ObjWarningPrint;
+  TestCard m_ObjErrorPrint;
   CheckButton m_NoColorMessages;
   CheckButton m_PrintRich;
   CheckButton m_PrintRichWarning;
@@ -22,6 +25,9 @@ public partial class Main : Control {
     m_DebugPrint = GetNode<TestCard>("Center/VBox/TestCards/DebugPrint");
     m_WarningPrint = GetNode<TestCard>("Center/VBox/TestCards/WarningPrint");
     m_ErrorPrint = GetNode<TestCard>("Center/VBox/TestCards/ErrorPrint");
+    m_ObjDebugPrint = GetNode<TestCard>("Center/VBox/TestCards/ObjDebugPrint");
+    m_ObjWarningPrint = GetNode<TestCard>("Center/VBox/TestCards/ObjWarningPrint");
+    m_ObjErrorPrint = GetNode<TestCard>("Center/VBox/TestCards/ObjErrorPrint");
     // Toggles
     m_NoColorMessages = GetNode<CheckButton>("Center/VBox/TogglesCenter/TogglesGrid/NoColorMessages");
     m_PrintRich = GetNode<CheckButton>("Center/VBox/TogglesCenter/TogglesGrid/PrintRich");
@@ -37,6 +43,7 @@ public partial class Main : Control {
     GetNode<Button>("Center/VBox/ColorsCenter/ColorsGrid/ResetErrorColor").Pressed += ResetErrorColor;
 
     string testMessage = "Lorem Ipsum dolor sit amet";
+    TestObject testObject = new();
 
     ///////////
     // Cards //
@@ -51,6 +58,18 @@ public partial class Main : Control {
 
     m_ErrorPrint.ButtonPressed += () => {
       Log.Error(testMessage);
+    };
+
+    m_ObjDebugPrint.ButtonPressed += () => {
+      Log.Debug(testObject);
+    };
+
+    m_ObjWarningPrint.ButtonPressed += () => {
+      Log.Warning(testObject);
+    };
+
+    m_ObjErrorPrint.ButtonPressed += () => {
+      Log.Error(testObject);
     };
 
     /////////////

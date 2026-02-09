@@ -44,6 +44,18 @@ _title = "Print Warning"
 layout_mode = 2
 _title = "Print Error"
 
+[node name="ObjDebugPrint" parent="Center/VBox/TestCards" unique_id=108733030 instance=ExtResource("2_idj7w")]
+layout_mode = 2
+_title = "Obj Print Debug"
+
+[node name="ObjWarningPrint" parent="Center/VBox/TestCards" unique_id=1805764810 instance=ExtResource("2_idj7w")]
+layout_mode = 2
+_title = "Obj Print Warning"
+
+[node name="ObjErrorPrint" parent="Center/VBox/TestCards" unique_id=668734839 instance=ExtResource("2_idj7w")]
+layout_mode = 2
+_title = "Obj Print Error"
+
 [node name="TogglesCenter" type="CenterContainer" parent="Center/VBox" unique_id=1853465541]
 layout_mode = 2
 
