@@ -1,2 +1,2 @@
 This project uses the TaiyouSimpleLog Library by Aragubas
-Copyright 2025 Aragubas. Check out https://aragubas.com
+Copyright 2026 Aragubas. Check out https://aragubas.com
