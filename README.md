@@ -1,4 +1,7 @@
-# Taiyou Simple Log
+# Migrated
+This project has been migrated to Codeberg. Here's the new, up-to-date link: https://codeberg.org/Aragubas/taiyou-simple-log
+
+## Taiyou Simple Log
 A simple, configurable and elegant logging library for Godot 4.* C# projects!
 
 By using static boolean variables, you can configure TaiyouSimpleLog to do behave how you want 
